@@ -1,5 +1,5 @@
 //cloud config
-#include <Thinger.ESP8266.h>
+#include <ThingerESP8266.h>
 
 #define USERNAME
 #define DEVICE_ID
