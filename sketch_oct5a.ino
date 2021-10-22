@@ -1,3 +1,16 @@
+//cloud config
+#include <Thinger.ESP8266.h>
+
+#define USERNAME
+#define DEVICE_ID
+#define DEVICE_CREDENTIAL
+
+#define SSID
+#define SSID_PASSWORD 
+
+//initialize
+ThingerESP8266 thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL)
+
 void setup() {
   // setting up input sensors
   pinMode(A0, INPUT);
@@ -5,6 +18,8 @@ void setup() {
   pinMode(A2, INPUT);
   pinMode(A3, INPUT);
 
+  //connect to wifi
+  thing.add_wifi(SSID, SSID_PASSWORD);
 
   //console for data testing
   Console.begin()
