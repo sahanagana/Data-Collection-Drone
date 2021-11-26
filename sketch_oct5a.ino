@@ -1,5 +1,10 @@
 //cloud config
-#include <ThingerESP8266.h>
+//#include <ThingerESP8266.h>
+//tvoc config
+//#include <Console.h>
+#include <CCS811.h>
+
+CCS811 sensor(&Wire /*IIC_ADDRESS=0x5A*/);
 
 #define USERNAME
 #define DEVICE_ID
@@ -9,7 +14,7 @@
 #define SSID_PASSWORD 
 
 //initialize
-ThingerESP8266 thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL)
+//ThingerESP8266 thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL)
 
 void setup() {
     Serial.begin(115200);
@@ -28,20 +33,17 @@ void setup() {
      *                  eCycle_250ms  //Constant power mode, sensor measurement every 250ms
      *                  }eCycle_t;
      */
-    sensor.setMeasCycle(sensor.eCycle_250ms);
+    sensor.setMeasCycle(sensor.eCycle_1s);
 
   //connect to wifi
-  thing.add_wifi(SSID, SSID_PASSWORD);
+  //thing.add_wifi(SSID, SSID_PASSWORD);
 
   //console for data testing
-  Console.begin()
-  //create bridge
-  Bridge.begin()
+
 
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+
 void loop() {
   delay(1000);
     if(sensor.checkDataReady() == true){
@@ -62,6 +64,3 @@ void loop() {
     //delay cannot be less than measurement cycle
     //delay(1000);
 }
-
-}
-
