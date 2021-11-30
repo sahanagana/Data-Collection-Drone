@@ -1,20 +1,26 @@
-//cloud config
-//#include <ThingerESP8266.h>
+/*
+
+ * EEPROM Write
+
+ *
+
+ * Stores values read from analog input 0 into the EEPROM.
+
+ * These values will stay in the EEPROM when the board is
+
+ * turned off and may be retrieved later by another sketch.
+
+ */
+
+#include <EEPROM.h>
 //tvoc config
 //#include <Console.h>
 #include <CCS811.h>
 
 CCS811 sensor(&Wire /*IIC_ADDRESS=0x5A*/);
 
-#define USERNAME
-#define DEVICE_ID
-#define DEVICE_CREDENTIAL
-
-#define SSID
-#define SSID_PASSWORD 
-
-//initialize
-//ThingerESP8266 thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL)
+/** the current address in the EEPROM (i.e. which byte we're going to write to next) **/
+int addr = 0;
 
 void setup() {
     Serial.begin(115200);
@@ -35,9 +41,6 @@ void setup() {
      */
     sensor.setMeasCycle(sensor.eCycle_1s);
 
-  //connect to wifi
-  //thing.add_wifi(SSID, SSID_PASSWORD);
-
   //console for data testing
 
 
@@ -47,15 +50,26 @@ void setup() {
 void loop() {
   delay(1000);
     if(sensor.checkDataReady() == true){
+        //EEPROM.put(addr, "CO2: ");
+        //EEPROM.put(sensor.getCO2PPM());
         Serial.print("CO2: ");
         Serial.print(sensor.getCO2PPM());
+        //EEPROM.put("ppm, TVOC: ");
+        //EEPROM.put(sensor.getTVOCPPB());
+        //EEPROM.put("ppb")
         Serial.print("ppm, TVOC: ");
         Serial.print(sensor.getTVOCPPB());
         Serial.println("ppb");
-        
+ /*
+        addr = addr + 1;
+      if (addr == EEPROM.length()) {
+        addr = 0;
+      }
     } else {
         Serial.println("Data is not ready!");
     }
+    */
+        
     /*!
      * @brief Set baseline
      * @param get from getBaseline.ino
