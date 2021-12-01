@@ -50,8 +50,9 @@ void setup() {
 void loop() {
   delay(1000);
     if(sensor.checkDataReady() == true){
-        //EEPROM.put(addr, "CO2: ");
-        //EEPROM.put(sensor.getCO2PPM());
+        string val = "CO2: " + sensor.getCO2PPM() + "ppm, TVOC: "
+        EEPROM.put(addr, val);
+        
         Serial.print("CO2: ");
         Serial.print(sensor.getCO2PPM());
         //EEPROM.put("ppm, TVOC: ");
