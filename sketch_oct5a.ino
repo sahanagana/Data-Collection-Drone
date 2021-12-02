@@ -52,30 +52,14 @@ void loop() {
     if(sensor.checkDataReady() == true){
         string val = "CO2: " + sensor.getCO2PPM() + "ppm, TVOC: "
         EEPROM.put(addr, val);
-        
-        Serial.print("CO2: ");
-        Serial.print(sensor.getCO2PPM());
-        //EEPROM.put("ppm, TVOC: ");
-        //EEPROM.put(sensor.getTVOCPPB());
-        //EEPROM.put("ppb")
-        Serial.print("ppm, TVOC: ");
-        Serial.print(sensor.getTVOCPPB());
-        Serial.println("ppb");
- /*
-        addr = addr + 1;
-      if (addr == EEPROM.length()) {
-        addr = 0;
-      }
-    } else {
-        Serial.println("Data is not ready!");
-    }
-    */
-        
-    /*!
-     * @brief Set baseline
-     * @param get from getBaseline.ino
-     */
+        addr+= sizeof(val);
+   if (Serial.available() > 0) {
+    // read the incoming byte:
+    incomingByte = Serial.read();
+    
+  }
     sensor.writeBaseLine(0x847B);
     //delay cannot be less than measurement cycle
     //delay(1000);
+}
 }
