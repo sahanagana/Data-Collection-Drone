@@ -50,16 +50,16 @@ void setup() {
 void loop() {
   delay(1000);
     if(sensor.checkDataReady() == true){
-        string val = "CO2: " + sensor.getCO2PPM() + "ppm, TVOC: "
+        String val = "CO2: " + String(sensor.getCO2PPM()) + "ppm, TVOC: " + String(sensor.getTVOCPPB()) + "ppb \n";
         EEPROM.put(addr, val);
         addr+= sizeof(val);
+    }
    if (Serial.available() > 0) {
-    // read the incoming byte:
-    incomingByte = Serial.read();
-    
+      for (int index = 0 ; index < EEPROM.length() ; index++) {
+        Serial.print(EEPROM[ index ]);
+      }
   }
     sensor.writeBaseLine(0x847B);
     //delay cannot be less than measurement cycle
     //delay(1000);
-}
 }
