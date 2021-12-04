@@ -1,15 +1,9 @@
 /*
-
  * EEPROM Write
-
  *
-
  * Stores values read from analog input 0 into the EEPROM.
-
  * These values will stay in the EEPROM when the board is
-
  * turned off and may be retrieved later by another sketch.
-
  */
 
 #include <EEPROM.h>
@@ -39,7 +33,7 @@ void setup() {
      *                  eCycle_250ms  //Constant power mode, sensor measurement every 250ms
      *                  }eCycle_t;
      */
-    sensor.setMeasCycle(sensor.eCycle_1s);
+    sensor.setMeasCycle(sensor.eCycle_10s);
 
   //console for data testing
 
@@ -53,13 +47,11 @@ void loop() {
         String val = "CO2: " + String(sensor.getCO2PPM()) + "ppm, TVOC: " + String(sensor.getTVOCPPB()) + "ppb \n";
         EEPROM.put(addr, val);
         addr+= sizeof(val);
+        if(Serial.available()>0){
+             for (int index = 0 ; index < EEPROM.length() ; index++) {
+               Serial.print(String(EEPROM.read(index)));
+               
+              }
+              exit(0);
+         }
     }
-   if (Serial.available() > 0) {
-      for (int index = 0 ; index < EEPROM.length() ; index++) {
-        Serial.print(EEPROM[ index ]);
-      }
-  }
-    sensor.writeBaseLine(0x847B);
-    //delay cannot be less than measurement cycle
-    //delay(1000);
-}
