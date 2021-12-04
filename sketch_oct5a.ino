@@ -55,3 +55,7 @@ void loop() {
               exit(0);
          }
     }
+    sensor.writeBaseLine(0x847B);
+    //delay cannot be less than measurement cycle
+    //delay(1000);
+}
