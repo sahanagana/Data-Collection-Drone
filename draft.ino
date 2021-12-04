@@ -23,7 +23,6 @@ void setup() {
         Serial.println("failed to init chip, please check if the chip connection is fine");
         delay(1000);
     }
-    Serial.println("Enter a key to start");
     /**
      * @brief Set measurement cycle
      * @param cycle:in typedef enum{
@@ -34,7 +33,7 @@ void setup() {
      *                  eCycle_250ms  //Constant power mode, sensor measurement every 250ms
      *                  }eCycle_t;
      */
-    //sensor.setMeasCycle(sensor.eCycle_1s);
+    sensor.setMeasCycle(sensor.eCycle_1s);
 
   //console for data testing
 
@@ -43,26 +42,22 @@ void setup() {
 
 
 void loop() {
-    if(Serial.available()){
-        String input = String(Serial.read());
-        Serial.print("You typed: " );
-        Serial.println(input);
-    }
   delay(1000);
-  /*
     if(sensor.checkDataReady() == true){
-        String val = "CO2: " + String(sensor.getCO2PPM()) + "ppm, TVOC: " + String(sensor.getTVOCPPB()) + "ppb ";
-        Serial.print(val);
-        EEPROM.put(addr, val);
-        addr += sizeof(val);
+        Serial.print("CO2: ");
+        Serial.print(sensor.getCO2PPM());
+        Serial.print("ppm, TVOC: ");
+        Serial.print(sensor.getTVOCPPB());
+        Serial.println("ppb");
+
+    } else {
+        Serial.println("Data is not ready!");
+    }
     /*!
      * @brief Set baseline
      * @param get from getBaseline.ino
      */
-    //sensor.writeBaseLine(0x847B);
+    sensor.writeBaseLine(0x847B);
     //delay cannot be less than measurement cycle
     //delay(1000);
-    //}
-
-  
 }
