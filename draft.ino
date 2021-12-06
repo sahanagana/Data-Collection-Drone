@@ -7,8 +7,6 @@
  */
 
 #include <EEPROM.h>
-//tvoc config
-//#include <Console.h>
 #include <CCS811.h>
 
 CCS811 sensor(&Wire /*IIC_ADDRESS=0x5A*/);
